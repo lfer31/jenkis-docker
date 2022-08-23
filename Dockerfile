@@ -8,6 +8,5 @@ RUN echo "deb [arch=$(dpkg --print-architecture) \
   https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
 RUN apt-get update && apt-get install -y docker-ce-cli
-RUN echo "190.190.190.128 k3d-hub" | tee -a /etc/hosts
 USER jenkins
 ## RUN jenkins-plugin-cli --plugins "blueocean:1.25.6 docker-workflow:1.29"
