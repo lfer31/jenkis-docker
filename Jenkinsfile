@@ -8,7 +8,7 @@ node {
     }
 
     stage('Build image') {
-  
+       sh 'ls'
        app = docker.build("k3d-hub/test")
     }
 
