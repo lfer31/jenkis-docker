@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+      - name: jenkins-docker
+        image: docker:dind
+        imagePullPolicy: Always
+        command: ["dockerd", "--host", "tcp://127.0.0.1:2376"]
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 2376
+        env:
+        - name: DOCKER_TLS_CERTDIR
+          value: /certs
+        volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+        - name: jenkins-docker-certs
+          mountPath: /certs/client
+      - name: jenkins
+        image: k3d-hub:5001/jenkins-docker
+        # image: jenkins/jenkins:lts-jdk11
+        env:
+        - name: DOCKER_HOST
+          value: tcp://localhost:2376
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+      volumes:
+      - name: jenkins-home
+        emptyDir: {}
+      - name: jenkins-docker-certs
+        emptyDir: {}
