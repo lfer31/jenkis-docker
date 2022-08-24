@@ -18,6 +18,7 @@ node {
         app.inside {
             sh 'echo "Tests passed"'
         }
+        sh 'docker info | grep -A 20 "Insecure Registries"'
     }
 
     stage('Push image') {
