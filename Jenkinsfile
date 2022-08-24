@@ -9,7 +9,7 @@ node {
 
     stage('Build image') {
        sh 'ls'
-       app = docker.build("k3d-hub/test")
+       app = docker.build("flora-test/test")
     }
 
     stage('Test image') {
@@ -17,6 +17,13 @@ node {
 
         app.inside {
             sh 'echo "Tests passed"'
+        }
+    }
+
+    stage('Push image') {
+        
+        docker.withRegistry('flora-test:5001', '') {
+            app.push("${env.BUILD_NUMBER}")
         }
     }
 
