@@ -22,7 +22,7 @@ node {
 
     stage('Push image') {
         
-        docker.withRegistry('flora-test:5001', '') {
+        docker.withRegistry('http://flora-test:5001', '') {
             app.push("${env.BUILD_NUMBER}")
         }
     }
