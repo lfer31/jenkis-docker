@@ -20,8 +20,19 @@ networks:
 volumes:
   jenkins-data:
   jenkins-docker-certs:
+  jenkins-registry:
 
 services:
+
+  flora-test:
+    image: registry:2
+    restart: always
+    networks:
+      - docker
+    ports:
+      - 5001:5000
+    volumes:
+      - jenkins-registry:/var/lib/registry
 
   jenkins:
     image: jenkins-docker
