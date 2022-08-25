@@ -31,10 +31,10 @@ pipeline {
 
       stage('Test image') {
         steps {
-          app.inside {
-            sh 'echo "Tests passed"'
-          }
           script {
+            app.inside {
+              sh 'echo "Tests passed"'
+            }
             sh 'docker info | grep -A 20 "Insecure Registries"'
           }
         }
@@ -42,8 +42,10 @@ pipeline {
 
       stage('Push image') {
         steps {
-          docker.withRegistry('http://flora-test:5000', '') {
-            app.push("v${env.BUILD_NUMBER}")
+          script {
+            docker.withRegistry('http://flora-test:5000', '') {
+              app.push("v${env.BUILD_NUMBER}")
+            }
           }
         }
       }
