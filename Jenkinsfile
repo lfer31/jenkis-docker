@@ -28,5 +28,11 @@ node {
         }
     }
 
+    stage('Apply Kubernetes files') {
+      withKubeConfig([credentialsId: 'mykubeconfig']) {
+        sh 'kubectl config view'
+      }
+    }
+
 }
 
