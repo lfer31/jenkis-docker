@@ -1,7 +1,7 @@
 node {
 
     stage('Apply Kubernetes files') {
-      withKubeCredentials([credentialsId: 'mykubeconfig', serverUrl: '190.190.190.228']) {
+      withKubeConfig([credentialsId: 'mykubeconfig', serverUrl: '190.190.190.228']) {
         sh 'kubectl config view'
       }
     }
