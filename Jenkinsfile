@@ -29,12 +29,10 @@ node {
     }
 
     stage('Deploy App to Kubernetes') {
-      steps {
-        container('kubectl') {
-          withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
-            sh 'sed -i "s/<TAG>/v${BUILD_NUMBER}/" deploy-jenkins.yaml'
-            sh 'kubectl apply -f deploy-jenkins.yaml'
-          }
+      container('kubectl') {
+        withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
+          sh 'sed -i "s/<TAG>/v${BUILD_NUMBER}/" deploy-jenkins.yaml'
+          sh 'kubectl apply -f deploy-jenkins.yaml'
         }
       }
     }
