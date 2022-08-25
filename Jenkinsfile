@@ -12,7 +12,7 @@ node {
     }
 
     stage('Build image') {
-      app = docker.build("flora-test:5001/jenkins-docker")
+      app = docker.build("flora-test:5000/jenkins-docker:v${env.BUILD_NUMBER}")
     }
 
     stage('Test image') {
@@ -23,8 +23,8 @@ node {
     }
 
     stage('Push image') {
-      docker.withRegistry('http://flora-test:5001', '') {
-          app.push("${env.BUILD_NUMBER}")
+      docker.withRegistry('http://flora-test:5000', '') {
+          app.push("v${env.BUILD_NUMBER}")
       }
     }
 
@@ -32,7 +32,7 @@ node {
       steps {
         container('kubectl') {
           withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
-            sh 'sed -i "s/<TAG>/${BUILD_NUMBER}/" deploy-jenkins.yaml'
+            sh 'sed -i "s/<TAG>/v${BUILD_NUMBER}/" deploy-jenkins.yaml'
             sh 'kubectl apply -f deploy-jenkins.yaml'
           }
         }
