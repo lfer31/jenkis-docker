@@ -27,8 +27,17 @@ node {
     }
 
     stage('Apply Kubernetes files') {
-      withKubeCredentials([credentialsId: 'mykubeconfig', serverUrl: '190.190.190.228']) {
-        sh 'kubectl config view'
+      agent {
+        kubernetes {
+          yamlFile 'builder.yaml'
+        }
+      }
+      steps {
+        container('kubectl') {
+          withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
+            sh 'kubectl config view'
+          }
+        }
       }
     }
 
