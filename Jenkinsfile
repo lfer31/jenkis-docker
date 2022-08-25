@@ -1,10 +1,6 @@
 node {
     def app
 
-    options {
-      ansiColor('xterm')
-    }
-
     stage('Clone repository') {
         checkout scm
     }
