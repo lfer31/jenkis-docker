@@ -1,0 +1,5 @@
+mirrors:
+  "flora-test:5001":
+    endpoint:
+      - http://190.190.190.128:5001
+

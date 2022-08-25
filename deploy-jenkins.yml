@@ -30,7 +30,7 @@ spec:
         - name: jenkins-docker-certs
           mountPath: /certs/client
       - name: jenkins
-        image: k3d-hub:5001/jenkins-docker
+        image: flora-test:5001/jenkins-docker:<TAG>
         # image: jenkins/jenkins:lts-jdk11
         env:
         - name: DOCKER_HOST
