@@ -32,11 +32,9 @@ node {
           yamlFile 'builder.yaml'
         }
       }
-      steps {
-        container('kubectl') {
-          withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
-            sh 'kubectl config view'
-          }
+      container('kubectl') {
+        withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
+          sh 'kubectl config view'
         }
       }
     }
