@@ -1,5 +1,10 @@
-node {
-    def app
+pipeline {
+
+    environment {
+      app = ""
+    }
+
+    agent any
 
     stage('Clone repository') {
         checkout scm
@@ -26,17 +31,5 @@ node {
         }
     }
 
-    stage('Apply Kubernetes files') {
-      agent {
-        kubernetes {
-          yamlFile 'builder.yaml'
-        }
-      }
-      container('kubectl') {
-        withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
-          sh 'kubectl config view'
-        }
-      }
-    }
 
 }
