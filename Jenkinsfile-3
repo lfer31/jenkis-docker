@@ -16,7 +16,7 @@ pipeline {
       steps {
         container('kubectl') {
           withCredentials([file(credentialsId: 'mykubeconfig', variable: 'KUBECONFIG')]) {
-            sh 'kubectl view config'
+            sh 'kubectl config view'
           }
         }
       }
