@@ -13,7 +13,7 @@ spec:
         app: jenkins
     spec:
       containers:
-      - name: jenkins-docker
+      - name: jenkins-dind
         image: docker:dind
         imagePullPolicy: Always
         command: ["dockerd", "--host", "tcp://127.0.0.1:2376"]
