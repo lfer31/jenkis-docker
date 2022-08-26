@@ -1,38 +1,25 @@
 stage('build') {
   node {
+    def app
 
     stage('Clone repository') {
-      steps {
-        checkout scm
-      }
+      checkout scm
     }
 
     stage('Build image') {
-      steps {
-        script {
-          app = docker.build("flora-test:5001/jenkins-docker")
-        }
-      }
+      app = docker.build("flora-test:5001/jenkins-docker")
     }
 
     stage('Test image') {
-      steps {
-        script {
-          app.inside {
-            sh 'echo "Tests passed"'
-          }
-          sh 'docker info | grep -A 20 "Insecure Registries"'
-        }
+      app.inside {
+        sh 'echo "Tests passed"'
       }
+      sh 'docker info | grep -A 20 "Insecure Registries"'
     }
 
     stage('Push image') {
-      steps {
-        script {
-          docker.withRegistry('http://flora-test:5000', '') {
-            app.push("v${env.BUILD_NUMBER}")
-          }
-        }
+      docker.withRegistry('http://flora-test:5000', '') {
+        app.push("v${env.BUILD_NUMBER}")
       }
     }
   }
