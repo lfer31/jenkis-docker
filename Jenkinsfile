@@ -7,7 +7,7 @@ stage('build') {
     }
 
     stage('Build image') {
-      app = docker.build("flora-test:5001/jenkins-docker")
+      app = docker.build("flora-test:5000/jenkins-docker")
     }
 
     stage('Test image') {
