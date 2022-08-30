@@ -122,11 +122,11 @@ controller:
     runAsGroup: 1000
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false
-  servicePort: 8080
+  servicePort: 8008
   targetPort: 8080
   # For minikube, set this to NodePort, elsewhere use LoadBalancer
   # Use ClusterIP if your setup includes ingress controller
-  serviceType: NodePort
+  serviceType: LoadBalancer
   # Use Local to preserve the client source IP and avoids a second hop for LoadBalancer and Nodeport type services,
   # but risks potentially imbalanced traffic spreading.
   serviceExternalTrafficPolicy:
@@ -142,7 +142,7 @@ controller:
   # Put labels on Jenkins controller pod
   podLabels: {}
   # Used to create Ingress record (should used with ServiceType: ClusterIP)
-  nodePort: 32080
+  # nodePort: 32080
   # Enable Kubernetes Startup, Liveness and Readiness Probes
   # if Startup Probe is supported, enable it too
   # ~ 2 minutes to allow Jenkins to restart when upgrading plugins. Set ReadinessTimeout to be shorter than LivenessTimeout.
@@ -783,8 +783,8 @@ persistence:
   storageClass: ""
   annotations: {}
   labels: {}
-  accessMode: "ReadWriteOnce"
-  size: "8Gi"
+  accessMode: "ReadWriteMany"
+  size: "5Gi"
   volumes:
   #  - name: nothing
   #    emptyDir: {}
